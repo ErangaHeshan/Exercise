@@ -1,4 +1,5 @@
 const {getRandomWordSync, getRandomWord} = require('word-maker');
+const { appendFile } = require('fs');
 
 console.log('It works!');
 
@@ -7,7 +8,7 @@ const promises = [];
 
 for (let i = 1; i < 101; i++) {
     promises.push(new Promise(resolve => {
-        if (i % 3 === 0 && i % 5 == 0) {
+        if (i % 3 === 0 && i % 5 === 0) {
             resolve(`${i}: FizzBuzz`);
         } else if (i % 3 === 0) {
             resolve(`${i}: Fizz`);
@@ -23,7 +24,13 @@ for (let i = 1; i < 101; i++) {
 }
 
 Promise.all(promises).then(response => {
+    let text = "";
     response.forEach(line => {
-        console.log(line);
-    })
+        text += line + '\r\n';
+    });
+    appendFile('result.txt', text, error => {
+        if (error) {
+            console.log('An error occurred! ', error.message);
+        }
+    });
 });

@@ -1,9 +1,10 @@
-const {getRandomWordSync, getRandomWord} = require('word-maker');
+const { getRandomWordSync, getRandomWord } = require('word-maker');
 const { appendFile } = require('fs');
 
 console.log('It works!');
 
 // YOUR CODE HERE
+console.time('Total time elapsed');
 const promises = [];
 
 for (let i = 1; i < 101; i++) {
@@ -16,7 +17,8 @@ for (let i = 1; i < 101; i++) {
             resolve(`${i}: Buzz`);
         } else {
             getRandomWord({
-                withErrors: true
+                withErrors: true,
+                slow: true
             }).then(word => resolve(`${i}: ${word}`))
                 .catch(() => resolve(`${i}: It shouldn't break anything!`));
         }
@@ -33,4 +35,5 @@ Promise.all(promises).then(response => {
             console.log('An error occurred! ', error.message);
         }
     });
+    console.timeEnd('Total time elapsed');
 });

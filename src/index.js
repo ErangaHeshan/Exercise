@@ -11,6 +11,12 @@ for (let i = 1; i < 101; i++) {
     } else if(i % 5 === 0){
         console.log(`${i}: Buzz`);
     } else {
-        console.log(`${i}: ${getRandomWordSync()}`);
+        try {
+            console.log(`${i}: ${getRandomWordSync({
+                withErrors: true 
+            })}`);
+        } catch (error) {
+            console.log(`${i}: It shouldn't break anything!`);
+        }
     }
 }
